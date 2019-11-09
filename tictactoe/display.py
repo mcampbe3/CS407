@@ -9,7 +9,7 @@ m = h_w * 0.0075
 black = "#000000"
 white = "#FFFFFF"
 title = "Tic Tac Toe"
-xo_colors = {"X": "#33CC66", "O": "#FFFFFF", "1": "#FFFFFF", "2": "#FFFFFF",
+xo_colors = {"X": "#33CC66", "O": "#F95B5B", "1": "#FFFFFF", "2": "#FFFFFF",
             "3": "#FFFFFF", "4": "#FFFFFF", "5": "#FFFFFF"}
 
 class GameView():

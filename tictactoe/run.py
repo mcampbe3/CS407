@@ -12,8 +12,13 @@ def main():
 
     print("Pick the number on the board that gives X a tic tac toe")
     print("Please type type a number (1-5) from the board")
-    print("or type 0 if it is not possible for X to get a tic tac toe")
-    user_input = int(input("Choose a position: "))
+    print("or type 0 if it is not possible for X to get a tic tac toe\n")
+    answer = grid.find_correct_tile()
+    user_input = input("Choose a position: ")
+    if user_input == answer:
+        print("\nYou passed!")
+    else:
+        print("\nBot test failed :(")
     # if user_input == 1:
     # 	#
     # elif user_input == 2:

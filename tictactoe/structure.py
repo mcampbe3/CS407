@@ -1,5 +1,6 @@
 import random
 from enum import Enum
+import graphics.graphics as g
 
 size = 3
 
@@ -18,7 +19,7 @@ class GameEvent(object):
 
 class GameListener(object):
     def notify(self, event):
-        raise NotImplementedError("Game Listener classes must implement 'notify'")
+        raise NotImplementedError("")
 
 
 class GameElement(object):
@@ -99,6 +100,106 @@ class Grid(GameElement):
         self.tiles[r][c] = tile
         self.notify_all(GameEvent(EventKind.tile_c, tile))
 
+    def find_correct_tile(self):
+        v = "0"
+        count = 0
+        x_positions = []
+        for r in range(self.s):
+            for c in range(self.s):
+                if self.tiles[r][c].val == "X":
+                    x_positions.append(g.Point(r, c))
+        p1 = x_positions[0]
+        p2 = x_positions[1]
+        if (p1.x - p2.x == 1):
+            count += 1
+            if count != 2:
+                if p1.x == 2:
+                    v = self.tiles[int(p1.x - 1)][int(p1.y)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p2.x - 1)][int(p1.y)].val
+                    if v == "O":
+                        v = "0"
+        if (p2.x - p1.x == 1):
+            count += 1
+            if count != 2:
+                if p2.x == 2:
+                    v = self.tiles[int(p2.x - 1)][int(p1.y)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p1.x - 1)][int(p1.y)].val
+                    if v == "O":
+                      v = "0"
+        if (p1.y - p2.y == 1):
+            count += 1
+            if count != 2:
+                if p1.y == 2:
+                    v = self.tiles[int(p2.x)][int(p1.y - 2)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p1.x)][int(p1.y + 1)].val
+                    if v == "O":
+                        v = "0"
+        if (p2.y - p1.y == 1):
+            count += 1
+            if count != 2:
+                if p2.y == 2:
+                    v = self.tiles[int(p1.x)][int(p2.y - 2)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p1.x)][int(p2.y + 1)].val
+                    if v == "O":
+                        v = "0"
+        if (p1.x - p2.x == 2):
+            count += 1
+            if count != 2:
+                if p1.x == 2:
+                    v = self.tiles[int(p1.x - 1)][int(p1.y)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p1.x + 1)][int(p1.y)].val
+        if (p2.x - p1.x == 2):
+            count += 1
+            if count != 2:
+                if p2.x == 2:
+                    v = self.tiles[int(p2.x - 1)][int(p1.y)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p2.x + 1)][int(p1.y)].val
+                    if v == "O":
+                        v = "0"
+        if (p1.y - p2.y == 2):
+            count += 1
+            if count != 2:
+                if p1.y == 2:
+                    v = self.tiles[int(p1.x)][int(p1.y - 1)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p1.x)][int(p1.y + 1)].val
+                    if v == "O":
+                        v = "0"
+        if (p2.y - p1.y == 2):
+            count += 1
+            if count != 2:
+                if p2.y == 2:
+                    v = self.tiles[int(p1.x)][int(p2.y - 1)].val
+                    if v == "O":
+                        v = "0"
+                else:
+                    v = self.tiles[int(p1.x)][int(p2.y + 1)].val
+                    if v == "O":
+                        v = "0"
+        if count > 1 or count == 0:
+            v = "0"
+        return v
+
 
 class Tile(GameElement):
     def __init__(self, grid, r, c, color, val):
@@ -110,7 +211,7 @@ class Tile(GameElement):
         self.val = val
 
     def __repr__(self):
-        return "Tile({}) at {},{}".format(self.value, self.r, self.c)
+        return "Tile({}) at {},{}".format(self.val, self.r, self.c)
 
     def __str__(self):
-        return str(self.value)
+        return str(self.val)
