@@ -9,6 +9,7 @@ m = h_w * 0.0075
 black = "#000000"
 white = "#FFFFFF"
 title = "Tic Tac Toe"
+nums = ["1", "2", "3", "4", "5"]
 xo_colors = {"X": "#33CC66", "O": "#F95B5B", "1": "#FFFFFF", "2": "#FFFFFF",
             "3": "#FFFFFF", "4": "#FFFFFF", "5": "#FFFFFF"}
 
@@ -72,9 +73,13 @@ class TileView():
         center = g.Point(x, y)
         label = g.Text(center, self.val)
         label.setSize(36)
+        if self.val in nums:
+            label.setFill("white")
         self.label = label
         white.draw(self.win)
         label.draw(self.win)
+        self.x = x
+        self.y = y
 
     def notify(self, evt):
         if evt.kind == structure.EventKind.tile_updated:

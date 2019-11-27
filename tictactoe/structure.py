@@ -101,8 +101,7 @@ class Grid(GameElement):
         self.notify_all(GameEvent(EventKind.tile_c, tile))
 
     def find_correct_tile(self):
-        v = "0"
-        count = 0
+        v = 0
         x_positions = []
         for r in range(self.s):
             for c in range(self.s):
@@ -110,94 +109,110 @@ class Grid(GameElement):
                     x_positions.append(g.Point(r, c))
         p1 = x_positions[0]
         p2 = x_positions[1]
-        if (p1.x - p2.x == 1):
-            count += 1
-            if count != 2:
-                if p1.x == 2:
-                    v = self.tiles[int(p1.x - 1)][int(p1.y)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p2.x - 1)][int(p1.y)].val
-                    if v == "O":
-                        v = "0"
-        if (p2.x - p1.x == 1):
-            count += 1
-            if count != 2:
-                if p2.x == 2:
-                    v = self.tiles[int(p2.x - 1)][int(p1.y)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p1.x - 1)][int(p1.y)].val
-                    if v == "O":
-                      v = "0"
-        if (p1.y - p2.y == 1):
-            count += 1
-            if count != 2:
-                if p1.y == 2:
-                    v = self.tiles[int(p2.x)][int(p1.y - 2)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p1.x)][int(p1.y + 1)].val
-                    if v == "O":
-                        v = "0"
-        if (p2.y - p1.y == 1):
-            count += 1
-            if count != 2:
-                if p2.y == 2:
-                    v = self.tiles[int(p1.x)][int(p2.y - 2)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p1.x)][int(p2.y + 1)].val
-                    if v == "O":
-                        v = "0"
-        if (p1.x - p2.x == 2):
-            count += 1
-            if count != 2:
-                if p1.x == 2:
-                    v = self.tiles[int(p1.x - 1)][int(p1.y)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p1.x + 1)][int(p1.y)].val
-        if (p2.x - p1.x == 2):
-            count += 1
-            if count != 2:
-                if p2.x == 2:
-                    v = self.tiles[int(p2.x - 1)][int(p1.y)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p2.x + 1)][int(p1.y)].val
-                    if v == "O":
-                        v = "0"
-        if (p1.y - p2.y == 2):
-            count += 1
-            if count != 2:
-                if p1.y == 2:
-                    v = self.tiles[int(p1.x)][int(p1.y - 1)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p1.x)][int(p1.y + 1)].val
-                    if v == "O":
-                        v = "0"
-        if (p2.y - p1.y == 2):
-            count += 1
-            if count != 2:
-                if p2.y == 2:
-                    v = self.tiles[int(p1.x)][int(p2.y - 1)].val
-                    if v == "O":
-                        v = "0"
-                else:
-                    v = self.tiles[int(p1.x)][int(p2.y + 1)].val
-                    if v == "O":
-                        v = "0"
-        if count > 1 or count == 0:
-            v = "0"
+        if (p2.x - p1.x == 1 and p2.y == p1.y):
+            if p2.x == 2:
+                value = self.tiles[int(p2.x - 2)][int(p1.y)].val
+                v = self.tiles[int(p2.x - 2)][int(p1.y)]
+                if value == "O":
+                    v = 0
+            else:
+                value = self.tiles[int(p2.x + 1)][int(p1.y)].val
+                v = self.tiles[int(p2.x + 1)][int(p1.y)]
+                if value == "O":
+                  v = 0
+        if (p2.y - p1.y == 1 and p2.x == p1.x):
+            if p2.y == 2:
+                value = self.tiles[int(p1.x)][int(p2.y - 2)].val
+                v = self.tiles[int(p1.x)][int(p2.y - 2)]
+                if value == "O":
+                    v = 0
+            else:
+                value = self.tiles[int(p1.x)][int(p2.y + 1)].val
+                v = self.tiles[int(p1.x)][int(p2.y + 1)]
+                if value == "O":
+                    v = 0
+        if (p2.x - p1.x == 2 and p2.y == p1.y):
+            if p2.x == 2:
+                value = self.tiles[int(p2.x - 1)][int(p1.y)].val
+                v = self.tiles[int(p2.x - 1)][int(p1.y)]
+                if value == "O":
+                    v = 0
+        if (p2.y - p1.y == 2 and p2.x == p1.x):
+            if p2.y == 2:
+                value = self.tiles[int(p1.x)][int(p2.y - 1)].val
+                v = self.tiles[int(p1.x)][int(p2.y - 1)]
+                if value == "O":
+                    v = 0
+
+        # Diagonals
+        if (p1.x == 0 and p1.y == 0):
+            if (p2.x == 1 and p2.y == 1):
+                value = self.tiles[2][2].val
+                v = self.tiles[2][2]
+                if value == "O":
+                    v = 0
+            if (p2.x == 2 and p2.y ==2):
+                value = self.tiles[1][1].val
+                v = self.tiles[1][1]
+                if value == "O":
+                    v = 0
+        if (p1.x == 1 and p1.y == 1 and p2.x == 2 and p2.y ==2):
+            value = self.tiles[0][0].val
+            v = self.tiles[0][0]
+            if value == "O":
+                v = 0
+
+        if (p2.x == 0 and p2.y == 0):
+            if (p1.x == 1 and p1.y == 1):
+                value = self.tiles[2][2].val
+                v = self.tiles[2][2]
+                if value == "O":
+                    v = 0
+            if (p1.x == 2 and p1.y ==2):
+                value = self.tiles[1][1].val
+                v = self.tiles[1][1]
+                if value == "O":
+                    v = 0
+        if (p2.x == 1 and p2.y == 1 and p1.x == 2 and p1.y ==2):
+            value = self.tiles[0][0].val
+            v = self.tiles[0][0]
+            if value == "O":
+                v = 0
+
+        if (p1.x == 0 and p1.y == 2):
+            if (p2.x == 1 and p2.y == 1):
+                value = self.tiles[2][0].val
+                v = self.tiles[2][0]
+                if value == "O":
+                    v = 0
+            if (p2.x == 2 and p2.y == 0):
+                value = self.tiles[1][1].val
+                v = self.tiles[1][1]
+                if value == "O":
+                    v = 0
+        if (p1.x == 1 and p1.y == 1 and p2.x == 2 and p2.y == 0):
+            value = self.tiles[0][2].val
+            v = self.tiles[0][2]
+            if value == "O":
+                v = 0
+
+        if (p2.x == 0 and p2.y == 2):
+            if (p1.x == 1 and p1.y == 1):
+                value = self.tiles[2][0].val
+                v = self.tiles[2][0]
+                if value == "O":
+                    v = 0
+            if (p1.x == 2 and p1.y == 0):
+                value = self.tiles[1][1].val
+                v = self.tiles[1][1]
+                if value == "O":
+                    v = 0
+        if (p2.x == 1 and p2.y == 1 and p1.x == 2 and p1.y == 0):
+            value = self.tiles[0][2].val
+            v = self.tiles[0][2]
+            if value == "O":
+                v = 0
+
         return v
 
 
@@ -209,6 +224,7 @@ class Tile(GameElement):
         self.c = c
         self.color = color
         self.val = val
+        self.pos = g.Point(r, c)
 
     def __repr__(self):
         return "Tile({}) at {},{}".format(self.val, self.r, self.c)
