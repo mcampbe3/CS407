@@ -3,7 +3,7 @@ Author: James Kang
 Description: Basically my thought process is that a bot will be able to solve math equations very fast
 With this understand we will create some simple math problems (some harder than other)
 and if the "user" is able to solve it within fraction of seconds we can know that
-this is infact a bot and not an actual person. Yeet
+this is infact a bot and not an actual person.
 '''
 
 import random
