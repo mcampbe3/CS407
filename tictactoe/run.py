@@ -1,7 +1,6 @@
 import display
 import structure
 import graphics.graphics as g
-from PIL import Image as NewImage
 
 def is_in(point, is_grid, is_tile):
     left, right = is_grid.tile_corners(is_tile.r, is_tile.c)
